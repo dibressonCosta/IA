@@ -1,4 +1,4 @@
-package br.com.facamp.com747;
+package IA;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,13 +15,13 @@ public class Maze {
 	/** Altura em pixels */
 	private int nrows;
 	/** Mapa de quadrados do labirinto */
-	private int[][] map;
+	private final int[][] map;
 	/** Representacao em ASCII do labirinto */
 	private ArrayList<String> rows;
 	/** Pontos adicionados pelo usuário representados por * */
-	private ArrayList<Point> points;
+	private final ArrayList<Point> points;
 	/** Pontos adicionados pelo usuário representados por ? */
-	private ArrayList<Point> options;
+	private final ArrayList<Point> options;
 	
 	/** Destino */
 	private int destinationX;
@@ -32,7 +32,7 @@ public class Maze {
 	/** Origem */
 	private int originY;
 	
-	public Maze(int x, int y, int originX, int originY, int destinationX, int destinationY) {
+	public Maze(final int x, final int y, final int originX, final int originY, final int destinationX, final int destinationY) {
 		this.x = x;
 		this.y = y;
 		points = new ArrayList<>();
@@ -46,7 +46,7 @@ public class Maze {
 		this.destinationY = destinationY;
 	}
  
-	public Maze(Maze m) {
+	public Maze(final Maze m) {
 		this.x = m.x;
 		this.y = m.y;
 		this.ncols = m.ncols;
@@ -69,7 +69,7 @@ public class Maze {
 		return ncols;
 	}
 	
-	public boolean isEmpty(int x, int y) {
+	public boolean isEmpty(final int x, final int y) {
 		if (x>getNCols())
 			return false;
 		if (y>getNRows())
@@ -78,25 +78,25 @@ public class Maze {
 			return false;
 		if (y<0)
 			return false;
-		char c = rows.get(y).charAt(x);
+		final char c = rows.get(y).charAt(x);
 		return c ==' ';
 	}
 	
-	public void addPoint(int x, int y) {
+	public void addPoint(final int x, final int y) {
 		points.add(new Point(x,y));
-		String newRow = rows.get(y).substring(0, x) + "*" + rows.get(y).substring(x+1,getNCols());
+		final String newRow = rows.get(y).substring(0, x) + "*" + rows.get(y).substring(x+1,getNCols());
 		rows.add(y, newRow);
 		rows.remove(y+1);
 	}
-	public void addOption(int x, int y) {
+	public void addOption(final int x, final int y) {
 		options.add(new Point(x,y));
-		String newRow = rows.get(y).substring(0, x) + "?" + rows.get(y).substring(x+1,getNCols());
+		final String newRow = rows.get(y).substring(0, x) + "?" + rows.get(y).substring(x+1,getNCols());
 		rows.add(y, newRow);
 		rows.remove(y+1);
 	}
 	
 	public void display() {
-		for (String s : rows)
+		for (final String s : rows)
 			System.out.println(s);
 	}
 	
@@ -131,13 +131,13 @@ public class Maze {
 	}
  
 	int r = 0;
-	private void generateMaze(int cx, int cy) {
-		DIR[] dirs = DIR.values();
+	private void generateMaze(final int cx, final int cy) {
+		final DIR[] dirs = DIR.values();
 		Collections.shuffle(Arrays.asList(dirs));
 		r=r+1;
-		for (DIR dir : dirs) {
-			int nx = cx + dir.dx;
-			int ny = cy + dir.dy;
+		for (final DIR dir : dirs) {
+			final int nx = cx + dir.dx;
+			final int ny = cy + dir.dy;
 			if (between(nx, x) && between(ny, y)
 					&& (map[nx][ny] == 0)) {
 				map[cx][cy] |= dir.bit;
@@ -147,7 +147,7 @@ public class Maze {
 		}
 	}
  
-	private static boolean between(int v, int upper) {
+	private static boolean between(final int v, final int upper) {
 		return (v >= 0) && (v < upper);
 	}
  
@@ -166,7 +166,7 @@ public class Maze {
 			W.opposite = E;
 		}
  
-		private DIR(int bit, int dx, int dy) {
+		private DIR(final int bit, final int dx, final int dy) {
 			this.bit = bit;
 			this.dx = dx;
 			this.dy = dy;
@@ -177,7 +177,7 @@ public class Maze {
 		return destinationX;
 	}
 
-	public void setDestinationX(int destinationX) {
+	public void setDestinationX(final int destinationX) {
 		this.destinationX = destinationX;
 	}
 
@@ -185,7 +185,7 @@ public class Maze {
 		return destinationY;
 	}
 
-	public void setDestinationY(int destinationY) {
+	public void setDestinationY(final int destinationY) {
 		this.destinationY = destinationY;
 	}
 
@@ -193,7 +193,7 @@ public class Maze {
 		return originX;
 	}
 
-	public void setOriginX(int originX) {
+	public void setOriginX(final int originX) {
 		this.originX = originX;
 	}
 
@@ -201,15 +201,15 @@ public class Maze {
 		return originY;
 	}
 
-	public void setOriginY(int originY) {
+	public void setOriginY(final int originY) {
 		this.originY = originY;
 	}
 	
-	public static void main(String[] args) {
-		int x = args.length >= 1 ? Integer.parseInt(args[0]) : 8;
-		int y = args.length == 2 ? Integer.parseInt(args[1]) : 8;
-		Maze maze = new Maze(x, y,1,1,31,15);
-		maze.display();
+	public static void main(final String[] args) {
+		final int x = args.length >= 1 ? Integer.parseInt(args[0]) : 8;
+		final int y = args.length == 2 ? Integer.parseInt(args[1]) : 8;
+		final Maze maze = new Maze(x, y,1,1,31,15);
+		//maze.display();
 		
 		maze.addPoint(31,15);
 		maze.addPoint(1,1);
