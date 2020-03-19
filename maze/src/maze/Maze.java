@@ -52,13 +52,17 @@ public class Maze {
 		this.ncols = m.ncols;
 		this.nrows = m.nrows;
 		this.map = m.map;
-		this.rows = (ArrayList<String>) m.rows.clone();
+		this.rows = extracted(m);
 		this.points = new ArrayList<>();
 		this.options = new ArrayList<>();
 		this.destinationX = m.destinationX;
 		this.destinationY = m.destinationY;
 		this.originX = m.originX;
 		this.originY = m.originY;
+	}
+
+	private ArrayList<String> extracted(final Maze m) {
+		return (ArrayList<String>) m.rows.clone();
 	}
 	
 	public int getNRows() {
