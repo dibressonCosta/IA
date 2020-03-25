@@ -22,7 +22,6 @@ public class Maze {
 	private final ArrayList<Point> points;
 	/** Pontos adicionados pelo usuário representados por ? */
 	private final ArrayList<Point> options;
-	
 	/** Destino */
 	private int destinationX;
 	/** Destino */
