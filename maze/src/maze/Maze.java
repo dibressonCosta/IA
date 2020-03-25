@@ -91,6 +91,12 @@ public class Maze {
 		rows.add(y, newRow);
 		rows.remove(y+1);
 	}
+	public void rmvPoint(final int x, final int y) {
+		points.add(new Point(x,y));
+		final String newRow = rows.get(y).substring(0, x) + " " + rows.get(y).substring(x+1,getNCols());
+		rows.add(y, newRow);
+		rows.remove(y+1);
+	}
 	public void addOption(final int x, final int y) {
 		options.add(new Point(x,y));
 		final String newRow = rows.get(y).substring(0, x) + "?" + rows.get(y).substring(x+1,getNCols());
