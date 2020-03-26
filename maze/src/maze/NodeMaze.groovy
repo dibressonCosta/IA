@@ -19,8 +19,8 @@ class NodeMaze extends Node{
 	}
 	
 	@Override
-	public Boolean isGoal() {
-		if(this.x == 31 && this.y == 15) {
+	public Boolean isGoal(int x, int y) {
+		if(this.x == x && this.y == y) {
 			return true
 		}else
 			return false
@@ -28,14 +28,19 @@ class NodeMaze extends Node{
 	
 	@Override
 	public Double h() {
-		
-		return null;
+		Double dist = Math.sqrt((this.x-59)**2 + (this.y - 29)**2  )
+		return dist
 	}
 
 	@Override
 	public Double g() {
-		
-		return null;
+		if(this.parent == null)
+			return 0
+		int g = this.parent.g() + 1
+		return g;
+	}
+	public Double score() {
+		return this.g() - this.h()
 	}
 	
 }

@@ -23,7 +23,6 @@ class Search {
 		return nextNode
 	}
 	static List findPath(NodeMaze goal) {
-		println "entrou"
 		List path = []
 		NodeMaze node = goal
 		while(	node!=null	) {
@@ -38,7 +37,7 @@ class Search {
 		}
 		path.add(init)
 		addVisited(init.x,init.y)
-		if(init.isGoal()) {
+		if(init.isGoal(maze.getDestinationX(), maze.getDestinationY())) {
 			return true
 		}
 		for (def Dir : Directions) {
@@ -72,8 +71,7 @@ class Search {
 					addVisited(current.x, current.y)
 					continue
 				}
-				if(current.isGoal()) {
-					println "goal"
+				if(current.isGoal(maze.getDestinationX(), maze.getDestinationY())) {
 					return findPath(current)
 				}
 				for (def Dir : Directions) {
