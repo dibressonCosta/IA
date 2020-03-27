@@ -4,23 +4,25 @@ class NodeMaze extends Node{
 	int x;
 	int y;
 	Boolean close;
-	public NodeMaze(Node parent, int x, int y) {
+	Maze maze
+	public NodeMaze(Node parent, int x, int y, Maze maze) {
 		super();
 		this.x = x
 		this.y = y
 		this.parent = parent
 		this.close = false
+		this.maze = maze
 	}
-	public NodeMaze(int x, int y) {
+	public NodeMaze(int x, int y, Maze maze) {
 		super()
 		this.x = x
 		this.y = y
 		this.close = false
+		this.maze = maze
 	}
-	
 	@Override
-	public Boolean isGoal(int x, int y) {
-		if(this.x == x && this.y == y) {
+	public Boolean isGoal() {
+		if(this.x == maze.getDestinationX() && this.y == maze.getDestinationY()) {
 			return true
 		}else
 			return false
@@ -28,7 +30,7 @@ class NodeMaze extends Node{
 	
 	@Override
 	public Double h() {
-		Double dist = Math.sqrt((this.x-59)**2 + (this.y - 29)**2  )
+		Double dist = Math.sqrt((this.x - maze.getDestinationX())**2 + (this.y - maze.getDestinationY())**2  )
 		return dist
 	}
 

@@ -17,9 +17,8 @@ class Search {
 	public addVisited(int x, int y) {
 		Visited.add([x, y])
 	}
-	public Node nextCoordinate(NodeMaze No, int x, int y) {
-		NodeMaze nextNode = new NodeMaze(No, (No.x + x), (No.y + y))
-
+	public Node nextCoordinate(NodeMaze No, int x, int y, Maze maze) {
+		NodeMaze nextNode = new NodeMaze(No, (No.x + x), (No.y + y), maze)
 		return nextNode
 	}
 	static List findPath(NodeMaze goal) {
@@ -37,13 +36,13 @@ class Search {
 		}
 		path.add(init)
 		addVisited(init.x,init.y)
-		if(init.isGoal(maze.getDestinationX(), maze.getDestinationY())) {
+		if(init.isGoal()) {
 			return true
 		}
 		for (def Dir : Directions) {
 			int x = Dir.value[0]
 			int y = Dir.value[1]
-			NodeMaze node = nextCoordinate(init, x, y);
+			NodeMaze node = nextCoordinate(init, x, y, maze);
 			if (searchDF(maze, node, path)) {
 				return true;
 			}
@@ -54,9 +53,7 @@ class Search {
 
 	public List solve(Maze maze, SearchType type) {
 		def path = []
-		if(type == SearchType.values()[2])
-			TreeSet<NodeMaze> fringe = new TreeSet<NodeMaze>(new NodeComp())
-		NodeMaze init = new NodeMaze(maze.getOriginX(), maze.getOriginY())
+		NodeMaze init = new NodeMaze(maze.getOriginX(), maze.getOriginY(), maze)
 		if(type == SearchType.values()[1]) {
 			if(searchDF(maze, init, path)) {
 				return path
@@ -73,13 +70,13 @@ class Search {
 					addVisited(current.x, current.y)
 					continue
 				}
-				if(current.isGoal(maze.getDestinationX(), maze.getDestinationY())) {
+				if(current.isGoal()) {
 					return findPath(current)
 				}
 				for (def Dir : Directions) {
 					int x = Dir.value[0]
 					int y = Dir.value[1]
-					NodeMaze node = nextCoordinate(current, x, y);
+					NodeMaze node = nextCoordinate(current, x, y, maze);
 					fringe.add(node)
 					addVisited(current.x, current.y)
 					node.setClose(true)
@@ -97,13 +94,13 @@ class Search {
 					addVisited(current.x, current.y)
 					continue
 				}
-				if(current.isGoal(maze.getDestinationX(), maze.getDestinationY())) {
+				if(current.isGoal()) {
 					return findPath(current)
 				}
 				for (def Dir : Directions) {
 					int x = Dir.value[0]
 					int y = Dir.value[1]
-					NodeMaze node = nextCoordinate(current, x, y);
+					NodeMaze node = nextCoordinate(current, x, y, maze);
 					fringe.add(node)
 					addVisited(current.x, current.y)
 					node.setClose(true)
