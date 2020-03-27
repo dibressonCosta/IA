@@ -86,13 +86,10 @@ class TestMaze {
 		final Maze maze = new Maze(x, y,1,1,59,29);
 		path = solve(maze)
 		println path
-		println "deu bom"
 		for(NodeMaze no: path) {
 			maze.addPoint(no.x, no.y)
 			maze.display()
 			sleep(200)
 		}
-		
-		//maze.addOption(1, 1)
 	}
 }

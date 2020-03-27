@@ -54,16 +54,42 @@ class Search {
 
 	public List solve(Maze maze, SearchType type) {
 		def path = []
-		LinkedList fringe = []
+		if(type == SearchType.values()[2])
+			TreeSet<NodeMaze> fringe = new TreeSet<NodeMaze>(new NodeComp())
 		NodeMaze init = new NodeMaze(maze.getOriginX(), maze.getOriginY())
 		if(type == SearchType.values()[1]) {
 			if(searchDF(maze, init, path)) {
 				return path
 			}
 		}else if(type == SearchType.values()[0]) {
+			LinkedList fringe = []
 			fringe.add(init)
 			while(!fringe.isEmpty() ) {
 				NodeMaze current = fringe.remove()
+				if( !maze.isValid(current.x, current.y) || isVisited(current.x, current.y)) {
+					continue
+				}
+				if(!maze.isEmpty(current.x, current.y)) {
+					addVisited(current.x, current.y)
+					continue
+				}
+				if(current.isGoal(maze.getDestinationX(), maze.getDestinationY())) {
+					return findPath(current)
+				}
+				for (def Dir : Directions) {
+					int x = Dir.value[0]
+					int y = Dir.value[1]
+					NodeMaze node = nextCoordinate(current, x, y);
+					fringe.add(node)
+					addVisited(current.x, current.y)
+					node.setClose(true)
+				}
+			}
+		}else {
+			TreeSet<NodeMaze> fringe = new TreeSet<NodeMaze>(new NodeComp())
+			fringe.add(init)
+			while(!fringe.isEmpty()) {
+				NodeMaze current = fringe.pollFirst()
 				if( !maze.isValid(current.x, current.y) || isVisited(current.x, current.y)) {
 					continue
 				}

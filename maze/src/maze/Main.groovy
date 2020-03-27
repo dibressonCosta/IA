@@ -10,7 +10,7 @@ class Main {
 		final int y = args.length == 2 ? Integer.parseInt(args[1]) : comp;
 		final Maze maze = new Maze(x, y,1,1,(larg*4 - 1),(comp*2 - 1));
 				
-		SearchType type = SearchType.values()[0]
+		SearchType type = SearchType.values()[2]
 		Search busca = new Search(type)
 		path = busca.solve(maze, type)
 		for(NodeMaze no: path) {
