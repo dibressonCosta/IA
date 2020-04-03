@@ -8,7 +8,6 @@ class Search {
 	public Search(SearchType type) {
 		this.type = type
 	}
-	def Fringe() {}
 	List Visited = [[0, 0]]
 	def Directions = ["D": [0, 1], "R": [1, 0], "U":[0, -1], "L":[-1, 0]]
 	public Boolean isVisited(int x, int y) {
@@ -54,11 +53,11 @@ class Search {
 	public List solve(Maze maze, SearchType type) {
 		def path = []
 		NodeMaze init = new NodeMaze(maze.getOriginX(), maze.getOriginY(), maze)
-		if(type == SearchType.values()[1]) {
+		if(type == SearchType.DF) {
 			if(searchDF(maze, init, path)) {
 				return path
 			}
-		}else if(type == SearchType.values()[0]) {
+		}else if(type == SearchType.BF) {
 			LinkedList fringe = []
 			fringe.add(init)
 			while(!fringe.isEmpty() ) {
